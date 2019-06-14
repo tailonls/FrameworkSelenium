@@ -7,13 +7,27 @@ import core.BasePage;
 
 public class FuncionalidadePageElementMap extends BasePage {
 
-	@FindBy(xpath = "//*[@id='email']")
-	WebElement emailLogin;
+	@FindBy(xpath = "//a[text()='Todas']")
+	WebElement abaTodas;
 
-	@FindBy(xpath = "//*[@id='senha']")
-	WebElement senhaLogin;
+	@FindBy(xpath = "//a[text()='Imagens']")
+	WebElement abaImagens;
 
-	@FindBy(xpath = "//button[text()='Entrar']")
-	WebElement botaoEntrar;
+	@FindBy(xpath = "//a[text()='Vídeos']")
+	WebElement abaVideos;
 
+	@FindBy(xpath = "//a[text()='Maps']")
+	WebElement abaMaps;
+
+	@FindBy(xpath = "//*[@id='searchboxinput']")
+	WebElement campoPesquisarMaps;
+	
+	@FindBy(xpath = "//*[@class='vdLsw gsfi']/following-sibling::input")
+	WebElement campoPesquisarGoogle;
+	
+	@FindBy(xpath = "//*[@id='tsf']//div[3]//input[1]")
+	WebElement botaoPesquisarGoogle;
+
+	@FindBy(xpath = "//*[@id='resultStats']")
+	WebElement lblStatusResultado;
 }

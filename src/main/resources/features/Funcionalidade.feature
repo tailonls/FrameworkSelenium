@@ -12,10 +12,9 @@ Funcionalidade: Pesquisa no google
     Quando clico no botao "Pesquisa Google"
     Entao deve carregar a pagina com resultados da pesquisa
 
-  @teste
+  @test
   Cenario: Validar resultados aproximados em uma pesquisa
     Dado que acesso o site do google
     E informo o termo "teste" no campo de pesquisa
     Quando clico no botao "Pesquisa Google"
     Entao deve carregar a pagina com resultados da pesquisa
-    E deve aparecer um label com o resultado aproximado de ocorrencias na tela

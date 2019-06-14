@@ -48,6 +48,10 @@ public class BasePage {
 		informaTexto(By.xpath("//*[@id='" + id + "']"), texto);
 	}
 
+	public void informaTexto(WebElement elemento, String texto) {
+		elemento.sendKeys(texto);
+	}
+
 	public void informaTexto(String id, Keys key) {
 		driver.findElement(By.xpath("//*[@id='" + id + "']")).sendKeys(key);
 	}
@@ -184,18 +188,36 @@ public class BasePage {
 
 		try {
 			webElement = wait.until(ExpectedConditions.visibilityOf(webElements));
+			System.out.println("Aguardou [" + tempoEmSegundos + "] segundos pelo elemento!");
+
 		} catch (TimeoutException e) {
 			System.out.println("Não encontrou elemento!");
 			return null;
 		}
-		System.out.println("Aguardou " + tempoEmSegundos + " segundos!");
 		return webElement;
+	}
 
+	protected WebElement aguardaElemento(WebElement elemento, int tempoEmSegundos) {
+		WebElement webElement = null;
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(tempoEmSegundos, TimeUnit.SECONDS)
+				.pollingEvery(200, TimeUnit.MILLISECONDS).ignoring(NoSuchElementException.class)
+				.ignoring(TimeoutException.class).ignoring(StaleElementReferenceException.class);
+
+		try {
+			webElement = wait.until(ExpectedConditions.visibilityOf(elemento));
+			System.out.println("Aguardou [" + tempoEmSegundos + "] segundos pelo elemento!");
+
+		} catch (TimeoutException e) {
+			System.out.println("Não encontrou elemento!");
+			return null;
+		}
+		return webElement;
 	}
 
 	public void aguardarSegundos(int segundos) {
 		try {
 			Thread.sleep(segundos * 1000);
+			System.out.println("Sistema aguardou [" + segundos + "] segundos!");
 
 		} catch (InterruptedException e) {
 			System.out.println("Erro ao aguardar " + e);
