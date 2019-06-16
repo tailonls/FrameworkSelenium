@@ -12,7 +12,6 @@ public class DriverFactory {
 	}
 
 	public static WebDriver getDriver() {
-
 		if (driver == null) {
 			switch (Propriedades.browser) {
 			case FIREFOX:
@@ -28,21 +27,19 @@ public class DriverFactory {
 				break;
 
 			default:
-				System.out.println("Driver para o browser nao enontrado");
+				System.out.println("Driver nao enontrado!");
 				break;
 			}
 		}
-		driver.manage().window().maximize(); // Expandido a janela do navegador
+		driver.manage().window().maximize();
 		return driver;
 	}
 
 	public static WebDriver killDriver() {
-
 		if (driver != null) {
 			driver.quit();
 			driver = null;
 		}
-
 		return driver;
 	}
 }

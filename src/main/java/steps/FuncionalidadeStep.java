@@ -27,15 +27,14 @@ public class FuncionalidadeStep {
 		funcionalidade.clicarBotaoPesquisa(botao);
 	}
 
-	@Entao("^deve carregar a pagina com resultados da pesquisa$")
-	public void deveCarregarPaginaComResultadosDaPesquisa() {
-		Assert.assertTrue("Nao carregou pagina com resultados da pesquisa",
-				funcionalidade.validaCarregametoPaginaPesquisa());
+	@Quando("^clico na aba \"([^\"]*)\"$")
+	public void clicoNaAba(String aba) {
+		funcionalidade.clicarAbaPesquisa(aba);
 	}
 
-	@Entao("^deve aparecer um label com o resultado aproximado de ocorrencias na tela$")
-	public void deveAparecerFraseNaTela() {
-
+	@Entao("^deve carregar a pagina de pesquisa por \"([^\"]*)\"$")
+	public void deveCarregarPaginaPesquisaImagens(String tipoPagina) {
+		Assert.assertTrue("Nao carregou pagina de pesquisa por [" + tipoPagina + "]",
+				funcionalidade.validaCarregametoPaginaPesquisa(tipoPagina));
 	}
-
 }

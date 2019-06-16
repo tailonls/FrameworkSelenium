@@ -17,7 +17,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 
-public class BasePage {
+public class BasePage extends BaseTest{
 
 	public BasePage() {
 	}
@@ -188,10 +188,9 @@ public class BasePage {
 
 		try {
 			webElement = wait.until(ExpectedConditions.visibilityOf(webElements));
-			System.out.println("Aguardou [" + tempoEmSegundos + "] segundos pelo elemento!");
 
 		} catch (TimeoutException e) {
-			System.out.println("Não encontrou elemento!");
+			logFail("Não encontrou elemento!");
 			return null;
 		}
 		return webElement;
@@ -205,10 +204,9 @@ public class BasePage {
 
 		try {
 			webElement = wait.until(ExpectedConditions.visibilityOf(elemento));
-			System.out.println("Aguardou [" + tempoEmSegundos + "] segundos pelo elemento!");
 
 		} catch (TimeoutException e) {
-			System.out.println("Não encontrou elemento!");
+			logFail("Não encontrou elemento!");
 			return null;
 		}
 		return webElement;
@@ -217,10 +215,9 @@ public class BasePage {
 	public void aguardarSegundos(int segundos) {
 		try {
 			Thread.sleep(segundos * 1000);
-			System.out.println("Sistema aguardou [" + segundos + "] segundos!");
 
 		} catch (InterruptedException e) {
-			System.out.println("Erro ao aguardar " + e);
+			logFail("Erro ao aguardar " + e);
 		}
 	}
 }
