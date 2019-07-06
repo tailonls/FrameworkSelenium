@@ -5,11 +5,13 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
+import core.BaseTest;
 import core.DriverFactory;
 
 public class FuncionalidadePage extends FuncionalidadePageElementMap {
 
 	WebDriver driver = DriverFactory.getDriver();
+	BaseTest base = new BaseTest();
 
 	public FuncionalidadePage() {
 		PageFactory.initElements(driver, this);
@@ -18,19 +20,19 @@ public class FuncionalidadePage extends FuncionalidadePageElementMap {
 	public void acessarPaginaInicial() {
 		DriverFactory.getDriver().get("https://www.google.com.br/");
 		aguardarSegundos(3);
-		logPass("Acessou página https://www.google.com.br/");
+		base.logPass("Acessou página https://www.google.com.br/");
 	}
 
 	public void informarTermoPesquisa(String termoPesquisa) {
 		aguardaElemento(campoPesquisarGoogle, 3);
 		campoPesquisarGoogle.sendKeys(termoPesquisa);
 		campoPesquisarGoogle.sendKeys(Keys.TAB);
-		logPass("Informou o termo de pesquisa " + termoPesquisa);
+		base.logPass("Informou o termo de pesquisa [" + termoPesquisa + "]");
 	}
 
 	public void clicarBotaoPesquisa(String botao) {
 		botaoPesquisarGoogle.click();
-		logPass("Clicou no botão de pesquisar");
+		base.logPass("Clicou no botão de pesquisar");
 	}
 
 	public boolean validaCarregametoPaginaPesquisa(String tipoPagina) {
@@ -65,7 +67,7 @@ public class FuncionalidadePage extends FuncionalidadePageElementMap {
 		}
 
 		if (driver.findElement(By.xpath(elementoPesquisa)) != null) {
-			logPass("Elemento encontado!");
+			base.logPass("Página de pesquisa retornou resultados!");
 			return true;
 		}
 		return false;
@@ -77,6 +79,6 @@ public class FuncionalidadePage extends FuncionalidadePageElementMap {
 		aguardaElemento(By.xpath(xpath), 3);
 		driver.findElement(By.xpath(xpath)).click();
 
-		logPass("Cliou na aba [" + aba + "]");
+		base.logPass("Cliou na aba [" + aba + "]");
 	}
 }

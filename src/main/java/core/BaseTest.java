@@ -8,38 +8,55 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.rules.TestName;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
+import cucumber.api.Scenario;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
+
 public class BaseTest {
 
 	static ExtentReports extent;
 	static ExtentTest logger;
-	static WebDriver driver = DriverFactory.getDriver();
-
-	@Rule
-	public TestName nomeTeste = new TestName(); // Nome do teste em execução
+	static ExtentHtmlReporter reporter;
 
 	@BeforeClass
-	public static void setup() throws IOException {
-		ExtentHtmlReporter reporter = new ExtentHtmlReporter("target/Reports/learn_automation2.html");
-
+	public static void iniciarTestes() throws IOException {
+		reporter = new ExtentHtmlReporter("target/Reports/Relatorios_testes.html");
 		extent = new ExtentReports();
 		extent.attachReporter(reporter);
-		logger = extent.createTest("Teste tailon");
+	}
 
+	@Before
+	public static void iniciarCenario(Scenario cenario) throws IOException {
+		logger = extent.createTest(cenario.getName());
 		extent.flush();
 	}
 
-	public static void logPass(String log) {
+	@After
+	public void finalizarCenario(Scenario cenario) {
+		if (cenario.isFailed()) {
+			logFail("O cenário falhou!");
+		}
+
+		if (Propriedades.FECHAR_BROWSER) {
+			DriverFactory.killDriver();
+		}
+	}
+
+	@AfterClass
+	public static void finalizarTestes() throws IOException {
+		extent.flush();
+		killDriver();
+	}
+
+	public void logPass(String log) {
 		try {
 			String temp = getScreenshot();
 			logger.pass(log, MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
@@ -53,7 +70,7 @@ public class BaseTest {
 	public static void logFail(String log) {
 		try {
 			String temp = getScreenshot();
-			logger.pass(log, MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
+			logger.fail(log, MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
 			extent.flush();
 
 		} catch (IOException e) {
@@ -67,9 +84,9 @@ public class BaseTest {
 	}
 
 	public static String getScreenshot() {
-		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		File src = ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.FILE);
 
-		String path = System.getProperty("user.dir") + "/Screenshot/" + System.currentTimeMillis() + ".png";
+		String path = System.getProperty("user.dir") + "/target/Screenshot/" + System.currentTimeMillis() + ".png";
 		File destination = new File(path);
 
 		try {
@@ -78,11 +95,5 @@ public class BaseTest {
 			logFail("Capture Failed " + e.getMessage());
 		}
 		return path;
-	}
-
-	@AfterClass
-	public static void finalizarTestes() throws IOException {
-		extent.flush();
-		killDriver();
 	}
 }

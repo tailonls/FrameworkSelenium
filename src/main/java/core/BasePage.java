@@ -17,12 +17,12 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 
-public class BasePage extends BaseTest{
+public class BasePage {
+
+	WebDriver driver = DriverFactory.getDriver();
 
 	public BasePage() {
 	}
-
-	WebDriver driver = DriverFactory.getDriver();
 
 	public void clicaBotao(String id) {
 		clicaBotao(By.xpath("//*[@id='" + id + "']"));
@@ -190,7 +190,6 @@ public class BasePage extends BaseTest{
 			webElement = wait.until(ExpectedConditions.visibilityOf(webElements));
 
 		} catch (TimeoutException e) {
-			logFail("Não encontrou elemento!");
 			return null;
 		}
 		return webElement;
@@ -206,7 +205,6 @@ public class BasePage extends BaseTest{
 			webElement = wait.until(ExpectedConditions.visibilityOf(elemento));
 
 		} catch (TimeoutException e) {
-			logFail("Não encontrou elemento!");
 			return null;
 		}
 		return webElement;
@@ -217,7 +215,6 @@ public class BasePage extends BaseTest{
 			Thread.sleep(segundos * 1000);
 
 		} catch (InterruptedException e) {
-			logFail("Erro ao aguardar " + e);
 		}
 	}
 }
