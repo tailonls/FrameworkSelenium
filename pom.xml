@@ -6,12 +6,14 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<dependencies>
+		<!-- DEPENDÊNCIA DO CUCUMBER -->
 		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-java</artifactId>
 			<version>1.2.5</version>
 		</dependency>
 
+		<!-- DEPENDÊNCIA DO CUCUMBER -->
 		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-junit</artifactId>
@@ -19,18 +21,21 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- DEPENDÊNCIA DO SELENIUM -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
 			<version>3.4.0</version>
 		</dependency>
 
+		<!-- DEPENDÊNCIA DO EXTENT REPORTER -->
 		<dependency>
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
 			<version>3.1.5</version>
 		</dependency>
 
+		<!-- DEPENDÊNCIA DO TESTNG -->
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
@@ -38,5 +43,12 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- MANIPULAR ARQUIVOS .CSV -->
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>4.6</version>
+		</dependency>
 	</dependencies>
+
 </project>
