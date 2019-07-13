@@ -5,6 +5,8 @@ import static core.DriverFactory.killDriver;
 import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -19,6 +21,9 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 public class BaseTest {
 
@@ -28,6 +33,9 @@ public class BaseTest {
 
 	@BeforeClass
 	public static void iniciarTestes() throws IOException {
+		new File("target/Reports").mkdir();
+		new File("target/Screenshot").mkdir();
+
 		reporter = new ExtentHtmlReporter("target/Reports/Relatorios_testes.html");
 		extent = new ExtentReports();
 		extent.attachReporter(reporter);
@@ -94,6 +102,17 @@ public class BaseTest {
 		} catch (IOException e) {
 			logFail("Capture Failed " + e.getMessage());
 		}
+		return path;
+	}
+
+	public static String getScreenshotAllPage() throws IOException {
+		String path = System.getProperty("user.dir") + "/target/Screenshot/" + System.currentTimeMillis() + ".png";
+
+		Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000))
+				.takeScreenshot(DriverFactory.getDriver());
+
+		ImageIO.write(screenshot.getImage(), "PNG", new File(path));
+
 		return path;
 	}
 }
