@@ -2,6 +2,7 @@ package core;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverFactory {
@@ -16,14 +17,24 @@ public class DriverFactory {
 			switch (Propriedades.browser) {
 			case FIREFOX:
 				System.setProperty("webdriver.gecko.driver",
-						"C:/GitPush/FrameworkSelenium/src/main/resources/drivers/geckodriver.exe");
+						System.getProperty("user.dir") + "/src/main/resources/drivers/geckodriver.exe");
 				driver = new FirefoxDriver();
 				break;
 
 			case CHROME:
 				System.setProperty("webdriver.chrome.driver",
-						"C:/GitPush/FrameworkSelenium/src/main/resources/drivers/chromedriver.exe");
+						System.getProperty("user.dir") + "/src/main/resources/drivers/chromedriver.exe");
+
 				driver = new ChromeDriver();
+				break;
+
+			case CHROME_HEADLESS: // Funciona a partir da versão 60 do chrome
+				ChromeOptions options = new ChromeOptions();
+				options.addArguments("--headless");
+
+				System.setProperty("webdriver.chrome.driver",
+						System.getProperty("user.dir") + "/src/main/resources/drivers/chromedriver.exe");
+				driver = new ChromeDriver(options);
 				break;
 
 			default:
