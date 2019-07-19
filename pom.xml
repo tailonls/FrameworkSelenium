@@ -6,21 +6,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<dependencies>
-		<!-- DEPENDÊNCIA DO CUCUMBER -->
-		<dependency>
-			<groupId>info.cukes</groupId>
-			<artifactId>cucumber-java</artifactId>
-			<version>1.2.5</version>
-		</dependency>
-
-		<!-- DEPENDÊNCIA DO CUCUMBER -->
-		<dependency>
-			<groupId>info.cukes</groupId>
-			<artifactId>cucumber-junit</artifactId>
-			<version>1.2.5</version>
-			<scope>test</scope>
-		</dependency>
-
 		<!-- DEPENDÊNCIA DO SELENIUM -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -33,14 +18,6 @@
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
 			<version>3.1.5</version>
-		</dependency>
-
-		<!-- DEPENDÊNCIA DO TESTNG -->
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>6.14.3</version>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- ASHOT (SCRENSHOT DA TELA INTEIRA) -->

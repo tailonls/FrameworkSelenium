@@ -8,8 +8,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.rules.TestName;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
@@ -18,9 +22,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
-import cucumber.api.Scenario;
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
+import junit.framework.TestResult;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
@@ -30,6 +32,11 @@ public class BaseTest {
 	static ExtentReports extent;
 	static ExtentTest logger;
 	static ExtentHtmlReporter reporter;
+
+	@Rule
+	public TestName teste = new TestName();
+	
+	public TestResult result = new TestResult();
 
 	@BeforeClass
 	public static void iniciarTestes() throws IOException {
@@ -42,14 +49,14 @@ public class BaseTest {
 	}
 
 	@Before
-	public static void iniciarCenario(Scenario cenario) throws IOException {
-		logger = extent.createTest(cenario.getName());
+	public void iniciarCenario() throws IOException {
+		logger = extent.createTest(teste.getMethodName());
 		extent.flush();
 	}
 
 	@After
-	public void finalizarCenario(Scenario cenario) {
-		if (cenario.isFailed()) {
+	public void finalizarCenario() {
+		if (!result.wasSuccessful()) {
 			logFail("O cenário falhou!");
 		}
 
